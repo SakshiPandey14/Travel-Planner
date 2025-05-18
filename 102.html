@@ -1,0 +1,652 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Travel Planner &amp; Packing Checklist
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Poppins', sans-serif;
+      background: #111111;
+      color: #f0f0f0;
+    }
+   /* Scrollbar for checklist */
+   ::-webkit-scrollbar {
+     width: 8px;
+   }
+   ::-webkit-scrollbar-track {
+     background: #1a1a1a;
+     border-radius: 4px;
+   }
+   ::-webkit-scrollbar-thumb {
+     background: #dc2626; /* red-600 */
+     border-radius: 4px;
+   }
+   a {
+     color: #dc2626;
+     text-decoration: none;
+     position: relative;
+   }
+   a::after {
+     content: "";
+     position: absolute;
+     left: 0;
+     bottom: -2px;
+     width: 0;
+     height: 2px;
+     background-color: #dc2626;
+     transition: width 0.3s ease;
+     border-radius: 1px;
+   }
+   a:hover::after {
+     width: 100%;
+   }
+   input[type="checkbox"]:checked {
+     accent-color: #dc2626;
+   }
+   input[type="checkbox"] {
+     accent-color: #dc2626;
+   }
+   input, textarea {
+     background-color: #1a1a1a;
+     border-color: #dc2626;
+     color: #f0f0f0;
+   }
+   input::placeholder, textarea::placeholder {
+     color: #9ca3af;
+   }
+   input:focus, textarea:focus {
+     outline: none;
+     box-shadow: 0 0 8px #dc2626;
+     border-color: #dc2626;
+   }
+   button {
+     background-color: #dc2626;
+     color: #111111;
+     font-weight: 700;
+     transition: background-color 0.3s ease, transform 0.1s ease;
+   }
+   button:hover {
+     background-color: #b91c1c;
+   }
+   button:active {
+     transform: scale(0.95);
+   }
+   header, footer {
+     background-color: #111111;
+     border-bottom: 2px solid #dc2626;
+   }
+   footer {
+     border-top: 2px solid #dc2626;
+   }
+   nav a {
+     font-weight: 600;
+     color: #dc2626;
+   }
+   nav a:hover {
+     color: #f87171;
+   }
+   .section-title {
+     color: #dc2626;
+     border-color: #b91c1c;
+   }
+   .category-title {
+     color: #dc2626;
+     border-color: #b91c1c;
+   }
+   .checkbox-label:hover {
+     background-color: #2a2a2a;
+   }
+  </style>
+ </head>
+ <body class="min-h-screen flex flex-col">
+  <header class="sticky top-0 z-30">
+   <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+     <img alt="Red airplane icon on black background" class="w-12 h-12" height="48" src="https://storage.googleapis.com/a1aa/image/40746183-4ad5-422e-a398-a22ae3147577.jpg" width="48"/>
+     <h1 class="text-3xl font-extrabold tracking-tight select-none" style="color:#dc2626;">
+      Travel Planner
+     </h1>
+    </div>
+    <nav class="hidden md:flex space-x-10">
+     <a class="relative group" href="#planner" tabindex="0">
+      Planner
+     </a>
+     <a class="relative group" href="#checklist" tabindex="0">
+      Packing Checklist
+     </a>
+     <a class="relative group" href="#tips" tabindex="0">
+      Travel Tips
+     </a>
+    </nav>
+    <button aria-label="Toggle menu" class="md:hidden focus:outline-none focus:ring-2 focus:ring-red-600 rounded" id="menu-btn" type="button">
+     <i class="fas fa-bars text-2xl" style="color:#dc2626;">
+     </i>
+    </button>
+   </div>
+   <nav class="hidden md:hidden bg-black border-t border-red-700 px-6 py-4 space-y-3 shadow-lg" id="mobile-menu">
+    <a class="block font-semibold hover:text-red-400 transition" href="#planner" tabindex="0">
+     Planner
+    </a>
+    <a class="block font-semibold hover:text-red-400 transition" href="#checklist" tabindex="0">
+     Packing Checklist
+    </a>
+    <a class="block font-semibold hover:text-red-400 transition" href="#tips" tabindex="0">
+     Travel Tips
+    </a>
+   </nav>
+  </header>
+  <main class="flex-grow max-w-7xl mx-auto px-6 py-10 space-y-16">
+   <!-- Travel Planner Section -->
+   <section aria-label="Travel Planner Section" class="bg-black rounded-3xl shadow-lg p-10 max-w-4xl mx-auto border border-red-700" id="planner" tabindex="0">
+    <h2 class="text-4xl font-extrabold mb-8 border-b-4 inline-block pb-2 select-none section-title">
+     Travel Planner
+    </h2>
+    <form autocomplete="off" class="space-y-8" id="travel-form" novalidate="">
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div>
+       <label class="block font-semibold mb-3 text-lg" for="destination" style="color:#f0f0f0;">
+        Destination
+       </label>
+       <input aria-describedby="destination-desc" aria-required="true" class="w-full rounded-xl px-5 py-3 text-lg placeholder-red-600 focus:ring-4 focus:ring-red-600 transition" id="destination" name="destination" placeholder="Where are you going?" required="" type="text"/>
+       <p class="sr-only" id="destination-desc">
+        Enter your travel destination
+       </p>
+      </div>
+      <div>
+       <label class="block font-semibold mb-3 text-lg" for="travelers" style="color:#f0f0f0;">
+        Number of Travelers
+       </label>
+       <input aria-describedby="travelers-desc" aria-required="true" class="w-full rounded-xl px-5 py-3 text-lg placeholder-red-600 focus:ring-4 focus:ring-red-600 transition" id="travelers" min="1" name="travelers" required="" type="number" value="1"/>
+       <p class="sr-only" id="travelers-desc">
+        Enter number of travelers, minimum 1
+       </p>
+      </div>
+      <div>
+       <label class="block font-semibold mb-3 text-lg" for="start-date" style="color:#f0f0f0;">
+        Start Date
+       </label>
+       <input aria-describedby="startdate-desc" aria-required="true" class="w-full rounded-xl px-5 py-3 text-lg placeholder-red-600 focus:ring-4 focus:ring-red-600 transition" id="start-date" name="start-date" required="" type="date"/>
+       <p class="sr-only" id="startdate-desc">
+        Select start date of travel
+       </p>
+      </div>
+      <div>
+       <label class="block font-semibold mb-3 text-lg" for="end-date" style="color:#f0f0f0;">
+        End Date
+       </label>
+       <input aria-describedby="enddate-desc" aria-required="true" class="w-full rounded-xl px-5 py-3 text-lg placeholder-red-600 focus:ring-4 focus:ring-red-600 transition" id="end-date" name="end-date" required="" type="date"/>
+       <p class="sr-only" id="enddate-desc">
+        Select end date of travel
+       </p>
+      </div>
+     </div>
+     <div>
+      <label class="block font-semibold mb-3 text-lg" for="notes" style="color:#f0f0f0;">
+       Additional Notes
+      </label>
+      <textarea aria-describedby="notes-desc" class="w-full rounded-2xl px-5 py-4 text-lg placeholder-red-600 focus:ring-4 focus:ring-red-600 transition resize-none min-h-[100px]" id="notes" name="notes" placeholder="Any special instructions or reminders..."></textarea>
+      <p class="sr-only" id="notes-desc">
+       Enter any additional notes or reminders
+      </p>
+     </div>
+     <div class="text-center">
+      <button aria-label="Save travel plan" class="rounded-3xl shadow-lg px-12 py-4 select-none" type="submit">
+       Save Plan
+      </button>
+     </div>
+    </form>
+    <div aria-atomic="true" aria-live="polite" class="mt-12 max-w-3xl mx-auto hidden bg-black border border-red-700 rounded-3xl p-8 shadow-inner" id="plan-summary" role="region" tabindex="0">
+     <h3 class="text-2xl font-extrabold mb-6 select-none" style="color:#dc2626;">
+      Your Travel Plan
+     </h3>
+     <dl class="space-y-4 text-lg">
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+       <dt class="font-semibold" style="color:#f0f0f0;">
+        Destination:
+       </dt>
+       <dd class="mt-1 sm:mt-0" id="summary-destination" style="color:#f0f0f0;">
+       </dd>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+       <dt class="font-semibold" style="color:#f0f0f0;">
+        Dates:
+       </dt>
+       <dd class="mt-1 sm:mt-0" id="summary-dates" style="color:#f0f0f0;">
+       </dd>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+       <dt class="font-semibold" style="color:#f0f0f0;">
+        Travelers:
+       </dt>
+       <dd class="mt-1 sm:mt-0" id="summary-travelers" style="color:#f0f0f0;">
+       </dd>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+       <dt class="font-semibold" style="color:#f0f0f0;">
+        Notes:
+       </dt>
+       <dd class="mt-1 sm:mt-0 whitespace-pre-wrap" id="summary-notes" style="color:#f0f0f0;">
+       </dd>
+      </div>
+     </dl>
+    </div>
+   </section>
+   <!-- Packing Checklist Section -->
+   <section aria-label="Packing Checklist Section" class="bg-black rounded-3xl shadow-lg p-10 max-w-6xl mx-auto border border-red-700" id="checklist" tabindex="0">
+    <h2 class="text-4xl font-extrabold mb-10 border-b-4 inline-block pb-3 select-none category-title">
+     Packing Checklist
+    </h2>
+    <div class="space-y-12 max-h-[720px] overflow-y-auto pr-4">
+     <!-- Category: Clothing -->
+     <div>
+      <h3 class="text-3xl font-bold mb-6 border-b border-red-600 pb-3 flex items-center space-x-4 select-none" style="color:#dc2626;">
+       <i class="fas fa-tshirt text-3xl">
+       </i>
+       <span>
+        Clothing
+       </span>
+      </h3>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          T-Shirts (3-5)
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Jeans/Pants (2-3)
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Shorts (2)
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Underwear (7+)
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Socks (7+ pairs)
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Jacket or Sweater
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Sleepwear
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Swimsuit
+         </span>
+        </label>
+       </li>
+      </ul>
+     </div>
+     <!-- Category: Toiletries -->
+     <div>
+      <h3 class="text-3xl font-bold mb-6 border-b border-red-600 pb-3 flex items-center space-x-4 select-none" style="color:#dc2626;">
+       <i class="fas fa-toothbrush text-3xl">
+       </i>
+       <span>
+        Toiletries
+       </span>
+      </h3>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Toothbrush &amp; Toothpaste
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Shampoo &amp; Conditioner (travel size)
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Soap or Body Wash
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Deodorant
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Razor &amp; Shaving Cream
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Sunscreen
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Moisturizer
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Contact Lens Solution &amp; Case
+         </span>
+        </label>
+       </li>
+      </ul>
+     </div>
+     <!-- Category: Electronics -->
+     <div>
+      <h3 class="text-3xl font-bold mb-6 border-b border-red-600 pb-3 flex items-center space-x-4 select-none" style="color:#dc2626;">
+       <i class="fas fa-plug text-3xl">
+       </i>
+       <span>
+        Electronics
+       </span>
+      </h3>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Phone &amp; Charger
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Headphones or Earbuds
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Camera &amp; Charger
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Power Bank
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Travel Adapter
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          e-Reader or Tablet
+         </span>
+        </label>
+       </li>
+      </ul>
+     </div>
+     <!-- Category: Documents -->
+     <div>
+      <h3 class="text-3xl font-bold mb-6 border-b border-red-600 pb-3 flex items-center space-x-4 select-none" style="color:#dc2626;">
+       <i class="fas fa-file-alt text-3xl">
+       </i>
+       <span>
+        Documents
+       </span>
+      </h3>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Passport / ID
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Travel Insurance
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Boarding Passes / Tickets
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Hotel Reservations
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Emergency Contacts
+         </span>
+        </label>
+       </li>
+      </ul>
+     </div>
+     <!-- Category: Miscellaneous -->
+     <div>
+      <h3 class="text-3xl font-bold mb-6 border-b border-red-600 pb-3 flex items-center space-x-4 select-none" style="color:#dc2626;">
+       <i class="fas fa-ellipsis-h text-3xl">
+       </i>
+       <span>
+        Miscellaneous
+       </span>
+      </h3>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Medications &amp; Prescriptions
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Books or Magazines
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Travel Pillow
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Reusable Water Bottle
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Snacks
+         </span>
+        </label>
+       </li>
+       <li>
+        <label class="inline-flex items-center space-x-3 cursor-pointer rounded-lg p-3 hover:bg-gray-900 transition checkbox-label">
+         <input class="form-checkbox h-6 w-6 rounded focus:ring-2 focus:ring-red-500" type="checkbox"/>
+         <span class="text-lg font-medium" style="color:#f0f0f0;">
+          Travel Locks
+         </span>
+        </label>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </section>
+   <!-- Travel Tips Section -->
+   <section aria-label="Travel Tips Section" class="bg-black rounded-3xl shadow-lg p-10 max-w-4xl mx-auto border border-red-700" id="tips" tabindex="0">
+    <h2 class="text-4xl font-extrabold mb-8 border-b-4 inline-block pb-2 select-none category-title">
+     Travel Tips
+    </h2>
+    <ul class="list-disc list-inside space-y-5 text-lg leading-relaxed" style="color:#f0f0f0;">
+     <li>
+      Always keep digital and physical copies of important documents.
+     </li>
+     <li>
+      Pack versatile clothing that can be layered for different weather.
+     </li>
+     <li>
+      Use packing cubes to organize your luggage efficiently.
+     </li>
+     <li>
+      Inform your bank about your travel dates to avoid card blocks.
+     </li>
+     <li>
+      Download offline maps and travel apps before your trip.
+     </li>
+     <li>
+      Stay hydrated and get enough rest during your travels.
+     </li>
+     <li>
+      Learn a few basic phrases in the local language.
+     </li>
+     <li>
+      Keep emergency contact numbers handy at all times.
+     </li>
+    </ul>
+   </section>
+  </main>
+  <footer class="py-8 mt-auto select-none border-t border-red-700 text-center text-sm font-semibold tracking-wide" style="color:#dc2626;">
+   <div class="max-w-7xl mx-auto px-6">
+    © 2024 Travel Planner. All rights reserved.
+   </div>
+  </footer>
+  <script>
+   // Mobile menu toggle
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Travel form submission
+    const travelForm = document.getElementById('travel-form');
+    const planSummary = document.getElementById('plan-summary');
+    const summaryDestination = document.getElementById('summary-destination');
+    const summaryDates = document.getElementById('summary-dates');
+    const summaryTravelers = document.getElementById('summary-travelers');
+    const summaryNotes = document.getElementById('summary-notes');
+
+    travelForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const destination = travelForm['destination'].value.trim();
+      const startDate = travelForm['start-date'].value;
+      const endDate = travelForm['end-date'].value;
+      const travelers = travelForm['travelers'].value;
+      const notes = travelForm['notes'].value.trim();
+
+      if (new Date(startDate) > new Date(endDate)) {
+        alert('End Date must be after Start Date.');
+        return;
+      }
+
+      summaryDestination.textContent = destination || 'N/A';
+      summaryDates.textContent = `${startDate} to ${endDate}`;
+      summaryTravelers.textContent = travelers;
+      summaryNotes.textContent = notes || 'None';
+
+      planSummary.classList.remove('hidden');
+
+      // Scroll to summary
+      planSummary.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+ </body>
+</html>
